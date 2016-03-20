@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "簡潔な (最低限の) Sphero の自動操縦プログラム",
   "main": "main.js",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "sphero": "^0.7.0"
   },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
