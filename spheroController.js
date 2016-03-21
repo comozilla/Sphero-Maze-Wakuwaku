@@ -80,8 +80,9 @@ function raiseEvent(eventName) {
     args.push(arguments[i]);
   }
   if (typeof events[eventName] !== "undefined") {
-    events[eventName].forEach(i => {
-      i.apply(this, args);
+    console.log(typeof events[eventName]);
+    events[eventName].forEach(event => {
+      event.apply(this, args);
     });
   }
 }
