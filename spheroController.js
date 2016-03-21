@@ -105,8 +105,8 @@ function configureKeypress() {
       process.exit();
     }
     if (typeof keypressCallbacks[key.name] !== "undefined") {
-      keypressCallbacks[key.name].forEach(i => {
-        i();
+      keypressCallbacks[key.name].forEach(callback => {
+        callback();
       });
     }
   });
