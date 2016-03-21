@@ -65,7 +65,7 @@ var spheroController = {
         orb.color(color);
         if (typeof time !== "undefined") {
           setTimeout(function() {
-            orb.color(original);
+            orb.color(originalColor);
           }, time * 1000);
         }
       }
