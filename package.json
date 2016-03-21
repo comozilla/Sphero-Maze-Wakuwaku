@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yammmt/Sphero-Auto-Pilot.git"
+    "url": "git+https://github.com/comozilla/Sphero-Maze-Wakuwaku.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yammmt/Sphero-Auto-Pilot/issues"
+    "url": "https://github.com/comozilla/Sphero-Maze-Wakuwaku/issues"
   },
-  "homepage": "https://github.com/yammmt/Sphero-Auto-Pilot#readme"
+  "homepage": "https://github.com/comozilla/Sphero-Maze-Wakuwaku#readme"
 }
