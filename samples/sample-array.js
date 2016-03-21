@@ -1,4 +1,4 @@
-var backside = require("./../backside");
+var controller = require("./../sphero-controller");
 var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
@@ -11,9 +11,9 @@ var angles = [
 
 // 接続された時に呼び出されます。
 function connect() {
-  backside.color("orange");
+  controller.color("orange");
   // ここに処理を書きます
-  backside.move(199, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
+  controller.move(199, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで
 }
 
@@ -22,10 +22,10 @@ function collision(count) {
   // ここに処理を書きます
     
   // 配列で書くこともできるよ
-  backside.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
+  controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで
 }
 
-backside.connect(port, connect);
-backside.addEventListener("collision", collision);
-backside.addEventListener("loop", loop);
+controller.connect(port, connect);
+controller.addEventListener("collision", collision);
+controller.addEventListener("loop", loop);
