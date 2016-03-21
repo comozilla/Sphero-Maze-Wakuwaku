@@ -1,7 +1,7 @@
 // samples/sample-array.js に移行したので消したい
 
 var backside = require("./backside");
-var keypress = require("keypress");
+var controller = require("sphero-controller");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
