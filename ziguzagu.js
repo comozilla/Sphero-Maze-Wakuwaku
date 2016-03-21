@@ -1,6 +1,6 @@
 // samples/sample-array.js に移行したので消したい
 
-var controller = require("./controller");
+var controller = require("./sphero-controller");
 var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
