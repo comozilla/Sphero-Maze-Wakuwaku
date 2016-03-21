@@ -1,13 +1,13 @@
-var spheroController = require("./spheroController");
+var controller = require("./sphero-controller");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM3";
 
 // 接続された時に呼び出されます。
 function onConnected() {
-  spheroController.setColor("orange");
+  controller.setColor("orange");
   // ここに処理を書きます
-  spheroController.move(100, "前");
+  controller.move(100, "前");
   // ここまで
 }
 
@@ -17,5 +17,5 @@ function onCollised(count) {
   // ここまで
 }
 
-spheroController.connect(port, onConnected);
-spheroController.addEventListener("collision", onCollised);
+controller.connect(port, onConnected);
+controller.addEventListener("collision", onCollised);
