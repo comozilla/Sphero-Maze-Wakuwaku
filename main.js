@@ -5,7 +5,7 @@ var port = "COM3";
 
 // 接続された時に呼び出されます。
 function connect() {
-  spheroController.color("orange");
+  spheroController.setColor("orange");
   // ここに処理を書きます
   spheroController.move(100, "前");
   // ここまで

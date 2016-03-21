@@ -26,7 +26,7 @@ var spheroController = {
         orb.detectCollisions(); // 衝突判定を有効化
         callback(orb);
         orb.on("collision", function() {
-          spheroController.color("green", 0.5);
+          spheroController.setColor("green", 0.5);
           raiseEvent("collision", collisionCount++);
           // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
           console.log((collisionCount) + "回目の衝突です");
@@ -57,7 +57,7 @@ var spheroController = {
     }
     roll(orb, speed, _deg);
   },
-  color: function(color, time) {
+  setColor: function(color, time) {
     orb.getColor(function(err, data) {
       if (data) {
         // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
