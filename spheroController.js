@@ -8,7 +8,7 @@ var collisionCount = 0;
 var orb;
 var keypressCallbacks = {};
 
-var backside = {
+var spheroController = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
       events[eventName] = [];
@@ -26,7 +26,7 @@ var backside = {
         orb.detectCollisions(); // 衝突判定を有効化
         callback(orb);
         orb.on("collision", function() {
-          backside.color("green", 0.5);
+          spheroController.color("green", 0.5);
           raiseEvent("collision", collisionCount++);
           // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
           console.log((collisionCount) + "回目の衝突です");
@@ -123,4 +123,4 @@ function setKeypressCallback(key, callback) {
 }
 configureKeypress();
 
-module.exports = backside;
+module.exports = spheroController;

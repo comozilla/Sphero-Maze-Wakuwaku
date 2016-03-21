@@ -1,13 +1,13 @@
-var backside = require("./backside");
+var spheroController = require("./spheroController");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM3";
 
 // 接続された時に呼び出されます。
 function connect() {
-  backside.color("orange");
+  spheroController.color("orange");
   // ここに処理を書きます
-  backside.move(100, "前");
+  spheroController.move(100, "前");
   // ここまで
 }
 
@@ -17,5 +17,5 @@ function collision(count) {
   // ここまで
 }
 
-backside.connect(port, connect);
-backside.addEventListener("collision", collision);
+spheroController.connect(port, connect);
+spheroController.addEventListener("collision", collision);
