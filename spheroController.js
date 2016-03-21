@@ -24,13 +24,13 @@ var spheroController = {
         console.log("準備終了");
         orb.finishCalibration();
         orb.detectCollisions(); // 衝突判定を有効化
-        callback(orb);
         orb.on("collision", function() {
           spheroController.setColor("green", 0.5);
           raiseEvent("collision", collisionCount++);
           // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
           console.log((collisionCount) + "回目の衝突です");
         });
+        callback(orb);
       });
     });
     return orb;
