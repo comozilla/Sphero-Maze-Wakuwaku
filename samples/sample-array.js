@@ -10,15 +10,15 @@ var angles = [
 ];
 
 // 接続された時に呼び出されます。
-function connect() {
-  controller.color("orange");
+function onConnected() {
+  controller.setColor("orange");
   // ここに処理を書きます
   controller.move(199, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで
 }
 
 // 衝突時に呼び出されます。
-function collision(count) {
+function onCollised(count) {
   // ここに処理を書きます
     
   // 配列で書くこともできるよ
@@ -26,6 +26,5 @@ function collision(count) {
   // ここまで
 }
 
-controller.connect(port, connect);
-controller.addEventListener("collision", collision);
-controller.addEventListener("loop", loop);
+controller.connect(port, onConnected);
+controller.addEventListener("collision", onCollised);
