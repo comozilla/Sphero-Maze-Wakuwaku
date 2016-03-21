@@ -61,11 +61,11 @@ var spheroController = {
     orb.getColor(function(err, data) {
       if (data) {
         // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
-        var _c = parseInt(data.color);
+        var originalColor = parseInt(data.color);
         orb.color(color);
         if (typeof time !== "undefined") {
           setTimeout(function() {
-            orb.color(_c);
+            orb.color(original);
           }, time * 1000);
         }
       }
