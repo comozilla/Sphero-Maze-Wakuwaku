@@ -4,7 +4,7 @@ var controller = require("./sphero-controller");
 var port = "COM3";
 
 // 接続された時に呼び出されます。
-function onConnected() {
+function onConnect() {
   controller.setColor("orange");
   // ここに処理を書きます
   controller.move(100, "前");
@@ -12,10 +12,10 @@ function onConnected() {
 }
 
 // 衝突時に呼び出されます。
-function onCollised(count) {
+function onCollide(count) {
   // ここに処理を書きます
   // ここまで
 }
 
-controller.connect(port, onConnected);
-controller.addEventListener("collision", onCollised);
+controller.connect(port, onConnect);
+controller.addEventListener("collision", onCollide);
