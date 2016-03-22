@@ -13,7 +13,7 @@ var currentAnglePoint = 0;
 var graph = [];
 
 // 接続された時に呼び出されます。
-function onConnected() {
+function onConnect() {
   controller.setColor("orange");
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
@@ -22,7 +22,7 @@ function onConnected() {
 }
 
 // 衝突時に呼び出されます。
-function onCollided(index) {
+function onCollide(index) {
   // ここに処理を書きます
   console.log(index);
   controller.setColor("red");
@@ -33,5 +33,5 @@ function onCollided(index) {
   // ここまで
 }
 
-controller.connect(port, onConnected);
-controller.addEventListener("collision", onCollided);
+controller.connect(port, onConnect);
+controller.addEventListener("collision", onCollide);
