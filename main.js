@@ -12,10 +12,10 @@ function onConnected() {
 }
 
 // 衝突時に呼び出されます。
-function onCollised(count) {
+function onCollided(count) {
   // ここに処理を書きます
   // ここまで
 }
 
 controller.connect(port, onConnected);
-controller.addEventListener("collision", onCollised);
+controller.addEventListener("collision", onCollided);

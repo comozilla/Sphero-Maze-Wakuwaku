@@ -22,7 +22,7 @@ function onConnected() {
 }
 
 // 衝突時に呼び出されます。
-function onCollised(index) {
+function onCollided(index) {
   // ここに処理を書きます
   console.log(index);
   controller.setColor("red");
@@ -34,4 +34,4 @@ function onCollised(index) {
 }
 
 controller.connect(port, onConnected);
-controller.addEventListener("collision", onCollised);
+controller.addEventListener("collision", onCollided);
