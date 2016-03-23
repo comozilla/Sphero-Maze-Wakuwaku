@@ -26,24 +26,31 @@ Spheroのシリアルポートにしておく。
 
 ## main.js 内関数について
 
-### connect
+### onConnect
 
-Spheroに接続された時に呼び出されます
+Spheroに接続された時に呼び出されます。
 
-### loop
-
-loopIntervalで指定した間隔（ミリ秒）で呼び出されます。
-
-### collision
+### onCollide
 
 衝突時に呼び出されます。
 
-## backside.js
+## sphero-controller でラップしている部分。
+
+※ `[]` 内は省略可能
 
 ### move(power, deg)
 Spheroを動かします。
 degは、数値を指定すると角度、
 文字列を指定すると、「左 右 前 後」に動きます。
+
+### setColor(color[, time])
+Sphero の色を変更します。
+第二引数に、指定した色を適用する時間を秒単位で設定します。
+
+### connect(port, callback)
+Sphero に接続します。
+callback では、接続、位置補正の処理が
+終わった後に呼び出される関数を指定します。
 
 ## License
 [MIT License](http://wisdommingle.com/mit-license/)
