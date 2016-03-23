@@ -1,24 +1,25 @@
-# Simple Branch
-簡潔な (最低限の) Sphero の自動操縦プログラム
+# Sphero-Maze-Wakuwaku
+Sphero で迷路を脱出するためのプログラム。
+Gifter-labo 向けのひな形。
 
 ## About
-Sphero が加速しながら前へと進んでいきます。  
-何かにぶつかると減速し、 90 度進行方向を変更します。  
-
+できるだけ簡単に、node.js で
+迷路を解けるようにしました。
 ___
 
 ## 準備
 
-- モジュールをインストール
+1. モジュールをインストール
 
 ```bash
 npm install
 ```
 
-- main.jsを編集
+2. main.jsを編集
 
 ```js
-var port = "COM7"; // 自分の Sphero の ID に置き換える
+// 自分の Sphero の ID に置き換える
+var port = "xxx";
 ```
 Spheroのシリアルポートにしておく。
 シリアルポートの取得は[こちら](https://github.com/comozilla/Sphero-wakuwaku/wiki/%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A)を参照。
