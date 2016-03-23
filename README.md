@@ -24,6 +24,15 @@ var port = "xxx";
 Spheroのシリアルポートにしておく。
 シリアルポートの取得は[こちら](https://github.com/comozilla/Sphero-wakuwaku/wiki/%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A)を参照。
 
+- 実行
+
+```bash
+npm start
+```
+
+その後、位置補正が始まる。
+Space キーで位置補正終了、onConnect 関数呼び出し。
+
 ## main.js 内関数について
 
 ### onConnect
