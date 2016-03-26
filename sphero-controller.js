@@ -9,33 +9,43 @@ var orb;
 var keypressCallbacks = {};
 
 var controller = {
-  addEventListener: function(eventName, fn) {
+  addEventListener: function (eventName, fn) {
     if (typeof events[eventName] === "undefined") {
       events[eventName] = [];
     }
     events[eventName].push(fn);
   },
-  connect: function(port, callback) {
+  connect: function (port, callback) {
     orb = sphero(port);
-    orb.connect(function() {
+    orb.connect(function () {
       console.log("準備開始");
-      orb.startCalibration(); // 位置関係の補正
-      setKeypressCallback("space", function() {
-        console.log("準備終了");
-        orb.finishCalibration();
-        orb.detectCollisions(); // 衝突判定を有効化
-        orb.on("collision", function() {
-          controller.setColor("green", 0.5);
-          raiseEvent("collision", collisionCount++);
-          // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
-          console.log((collisionCount) + "回目の衝突です");
+      orb.configureCollisions({
+        meth: 0x01,
+        xt: 0x7A,
+        xs: 0xFF,
+        yt: 0x7A,
+        ys: 0xFF,
+        dead: 100
+      }, function () {
+        console.log("configured");
+        orb.startCalibration(); // 位置関係の補正
+        setKeypressCallback("space", function () {
+          console.log("準備終了");
+          orb.finishCalibration();
+          orb.detectCollisions(); // 衝突判定を有効化
+          orb.on("collision", function () {
+            controller.setColor("green", 0.5);
+            raiseEvent("collision", collisionCount++);
+            // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
+            console.log((collisionCount) + "回目の衝突です");
+          });
+          callback(orb);
         });
-        callback(orb);
       });
     });
     return orb;
   },
-  move: function(speed, deg) {
+  move: function (speed, deg) {
     var _deg = 0;
     if (typeof deg === "number") {
       _deg = deg;
@@ -57,14 +67,14 @@ var controller = {
     }
     roll(orb, speed, _deg);
   },
-  setColor: function(color, time) {
-    orb.getColor(function(err, data) {
+  setColor: function (color, time) {
+    orb.getColor(function (err, data) {
       if (data) {
         // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
         var originalColor = parseInt(data.color);
         orb.color(color);
         if (typeof time !== "undefined") {
-          setTimeout(function() {
+          setTimeout(function () {
             orb.color(originalColor);
           }, time * 1000);
         }
@@ -98,7 +108,7 @@ function configureKeypress() {
   keypress(process.stdin);
 
   // listen for the "keypress" event
-  process.stdin.on('keypress', function(ch, key) {
+  process.stdin.on('keypress', function (ch, key) {
     if (key && key.ctrl && key.name === 'c') {
       console.log("exit");
       process.stdin.pause();
