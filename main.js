@@ -1,30 +1,49 @@
 var express = require("express");
 var app = express();
-var controller = require("./sphero-controller");
 var http = require("http").Server(app);
+var io = require("socket.io")(http);
+var controller = require("./sphero-controller");
 
+var angles = [];
 // 自分の Sphero の ID に置き換える
-var port = "COM3";
+var port = "COM7";
+var currentAnglePoint = 0;
+var isRunning = false;
 
 // 接続された時に呼び出されます。
 function onConnect() {
   controller.setColor("orange");
-  // ここに処理を書きます
-  controller.move(100, "前");
-  // ここまで
 }
 
 // 衝突時に呼び出されます。
 function onCollide(count) {
-  // ここに処理を書きます
-  // ここまで
+  console.log(isRunning);
+  if (isRunning) {
+    controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);  
+  }
 }
 
 controller.connect(port, onConnect);
 controller.addEventListener("collision", onCollide);
 
 app.use(express.static("client"));
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/textarea.html");
+http.listen(3000, function () { });
+
+io.sockets.on('connection', function (socket) {
+  socket.on('runSphero', function (data) {
+    socket.emit("received", {});
+    angles = data.deg;
+    currentAnglePoint = 0;
+    controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
+    isRunning = true;
+  });
+  socket.on("stopSphero", function() {
+    controller.move(0, 0);
+    isRunning = false;
+    currentAnglePoint = 0;
+  });
+  socket.on("calibration", function(data) {
+    controller.calibrate(data.start);
+  })
 });
-http.listen(3000, function() {});
+
