@@ -6,7 +6,21 @@ var port = "COM7";
 
 var currentAnglePoint = 0;
 var angles = [
-  "前", "右", "前", "左", "前"
+  0,
+  90,
+  0,
+  270,
+  45,
+  0,
+  270,
+  180,
+  270,
+  180,
+  90,
+  180,
+  270,
+  180
+  
 ];
 
 // 接続された時に呼び出されます。
@@ -20,7 +34,6 @@ function onConnect() {
 // 衝突時に呼び出されます。
 function onCollide(count) {
   // ここに処理を書きます
-    
   // 配列で書くこともできるよ
   controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで

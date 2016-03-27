@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var controller = require("./sphero-controller");
+var http = require("http").Server(app);
 
 // 自分の Sphero の ID に置き換える
 var port = "COM3";
@@ -23,3 +24,7 @@ controller.connect(port, onConnect);
 controller.addEventListener("collision", onCollide);
 
 app.use(express.static("client"));
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/textarea.html");
+});
+http.listen(3000, function() {});
