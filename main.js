@@ -1,3 +1,5 @@
+var express = require("express");
+var app = express();
 var controller = require("./sphero-controller");
 
 // 自分の Sphero の ID に置き換える
@@ -19,3 +21,5 @@ function onCollide(count) {
 
 controller.connect(port, onConnect);
 controller.addEventListener("collision", onCollide);
+
+app.use(express.static("client"));
