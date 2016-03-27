@@ -28,10 +28,10 @@ var controller = {
         dead: 100
       }, function () {
         console.log("configured");
-        orb.startCalibration(); // 位置関係の補正
+        controller.calibrate(true); // 位置関係の補正
         setKeypressCallback("space", function () {
           console.log("準備終了");
-          orb.finishCalibration();
+          controller.calibrate(false);
           orb.detectCollisions(); // 衝突判定を有効化
           orb.on("collision", function () {
             controller.setColor("green", 0.5);
@@ -47,9 +47,9 @@ var controller = {
   },
   move: function (speed, deg) {
     var _deg = 0;
-    if (typeof deg === "number") {
+    if (!isNaN(deg)) {
       _deg = deg;
-    } else if (typeof deg === "string") {
+    } else {
       switch (deg) {
         case "左":
           _deg = 270;
@@ -80,6 +80,13 @@ var controller = {
         }
       }
     });
+  },
+  calibrate: function(isStart) {
+    if (isStart) {
+      orb.startCalibration();
+    } else {
+      orb.finishCalibration();
+    }
   }
 };
 
