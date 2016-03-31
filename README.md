@@ -1,6 +1,10 @@
-# Sphero-Auto-Pilot
-簡潔な (最低限の) Sphero の自動操縦プログラム  
+# Sphero-Maze-Wakuwaku
+Sphero で迷路を脱出するためのプログラム。
+Gifter-labo 向けのひな形。
 
+## About
+できるだけ簡単に、node.js で
+迷路を解けるようにしました。
 ___
 
 ## 準備
@@ -14,20 +18,54 @@ npm install
 - main.jsを編集
 
 ```js
-var orb = sphero("/dev/tty.Sphero-YRW-AMP-SPP"); // 自分の Sphero の ID に置き換える
+// 自分の Sphero の ID に置き換える
+var port = "xxx";
 ```
 Spheroのシリアルポートにしておく。
 シリアルポートの取得は[こちら](https://github.com/comozilla/Sphero-wakuwaku/wiki/%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A)を参照。
 
----
+- 実行
 
-## About
-Sphero が加速しながら前へと進んでいきます。  
-何かにぶつかると減速し、 90 度進行方向を変更します。  
+```bash
+npm start
+```
 
-## Notice
-- main.js 二行目、sphero("") の中身は自分の Sphero の ID に置き換えて下さい。さもなくば動作しません。
-- 初期速度および加速減速の値は、自らの環境によって数値を変更すると良いかもしれません。
+その後、位置補正が始まる。
+Space キーで位置補正終了、onConnect 関数呼び出し。
+
+## main.js 内関数について
+
+### onConnect
+
+Spheroに接続された時に呼び出されます。
+
+### onCollide
+
+衝突時に呼び出されます。
+
+## sphero-controller でラップしている部分
+
+※ `[]` 内は省略可能
+
+### move(speed, deg)
+Spheroを動かします。
+speedは、動かす速度で、0-255 で指定します。
+degは、数値を指定すると角度、
+文字列を指定すると、「左 右 前 後」に動きます。
+
+### setColor(color[, time])
+Sphero の色を変更します。
+色の指定方法は、orb.color と同様、
+`orange`、`green`などの名前や、
+カラーコードの場合は、`0x00ff88` と、16進数で指定できます。
+また、第二引数に、指定した色を適用する時間を秒単位で設定します。
+
+<!---
+### connect(port, callback)
+Sphero に接続します。
+callback では、接続、位置補正の処理が
+終わった後に呼び出される関数を指定します。
+-->
 
 ## License
 [MIT License](http://wisdommingle.com/mit-license/)
