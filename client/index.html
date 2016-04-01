@@ -10,8 +10,11 @@
       var socket = io.connect();
       document.getElementById("send-run").addEventListener("click", function() {
         var dataResult = processData(document.getElementById("sphero").value);
-        if (!dataResult.error) {
+        if (dataResult.errors.length === 0) {
+          showSuccessMessage("データは正しく処理されました。");
           socket.emit("runSphero", dataResult.data);
+        } else {
+          showErrorMessage(dataResult.errors.join("\n"));
         }
       });
       document.getElementById("send-stop").addEventListener("click", function() {
@@ -44,11 +47,9 @@
       });
       if (inputErrors.length === 0) {
         data["angle-list"] = angleList;
-        showSuccessMessage("データは正しく処理されました。");
-        return { error: false, data: data };
+        return { errors: [], data: data };
       }
-      showErrorMessage(inputErrors.join("\n"));
-      return { error: true };
+      return { errors: inputErrors };
     }
     function showErrorMessage(error) {
       showMessageElem.textContent = error;
