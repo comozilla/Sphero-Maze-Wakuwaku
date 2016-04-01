@@ -36,7 +36,7 @@
       var inputErrors = [];
       var lines = text.split("\n");
       var angleList = lines.map(line => {
-        var deg = directionToDegree(line.substr(0, 1));
+        var deg = directionToDegree(line);
         if (isNaN(deg)) {
           inputErrors.push(line + "は正しい入力ではありません。");
           return null;
