@@ -33,7 +33,7 @@
       var inputErrors = [];
       data["angle-list"] = text.split("\n");
       data["angle-list"].forEach(line => {
-        if (/^(左|右|前|後)$/.test(line)) {
+        if (!/^(左|右|前|後)$/.test(line)) {
           inputErrors.push(line + "は正しい入力ではありません。");
         }
       });
