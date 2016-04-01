@@ -5,69 +5,71 @@
   <title>Sphero Textarea</title>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-      var socket = io.connect();
-      document.getElementById("send-run").addEventListener("click", function() {
-        var dataResult = parseData(document.getElementById("sphero").value);
-        if (dataResult.errors.length === 0) {
-          showSuccessMessage("データは正しく処理されました。");
-          socket.emit("runSphero", dataResult.data);
-        } else {
-          showErrorMessage(dataResult.errors.join("\n"));
+    (function() {
+      document.addEventListener("DOMContentLoaded", function() {
+        var socket = io.connect();
+        document.getElementById("send-run").addEventListener("click", function() {
+          var dataResult = parseData(document.getElementById("sphero").value);
+          if (dataResult.errors.length === 0) {
+            showSuccessMessage("データは正しく処理されました。");
+            socket.emit("runSphero", dataResult.data);
+          } else {
+            showErrorMessage(dataResult.errors.join("\n"));
+          }
+        });
+        document.getElementById("send-stop").addEventListener("click", function() {
+          socket.emit("stopSphero", {});
+        });
+        document.getElementById("send-start-calibration").addEventListener("click", function() {
+          socket.emit("startCalibration", {});
+        });
+        document.getElementById("send-finish-calibration").addEventListener("click", function() {
+          socket.emit("finishCalibration", {});
+        });
+        socket.on("received", function() {
+          console.log("送信されました！");
+        });
+        showMessageElem = document.getElementById("show-message");
+      });
+      function parseData(text) {
+        var inputErrors = [];
+        var lines = text.split("\n");
+        var angleList = lines.map(line => {
+          var deg = directionToDegree(line);
+          if (isNaN(deg)) {
+            inputErrors.push(line + "は正しい入力ではありません。");
+            return null;
+          } else {
+            return parseInt(deg);
+          }
+        }).filter(line => typeof line === "number");
+        if (inputErrors.length === 0) {
+          return { errors: [], data: angleList };
         }
-      });
-      document.getElementById("send-stop").addEventListener("click", function() {
-        socket.emit("stopSphero", {});
-      });
-      document.getElementById("send-start-calibration").addEventListener("click", function() {
-        socket.emit("startCalibration", {});
-      });
-      document.getElementById("send-finish-calibration").addEventListener("click", function() {
-        socket.emit("finishCalibration", {});
-      });
-      socket.on("received", function() {
-        console.log("送信されました！");
-      });
-      showMessageElem = document.getElementById("show-message");
-    });
-    function parseData(text) {
-      var inputErrors = [];
-      var lines = text.split("\n");
-      var angleList = lines.map(line => {
-        var deg = directionToDegree(line);
-        if (isNaN(deg)) {
-          inputErrors.push(line + "は正しい入力ではありません。");
-          return null;
-        } else {
-          return parseInt(deg);
+        return { errors: inputErrors };
+      }
+      function showErrorMessage(error) {
+        var showMessageElem = document.getElementById("show-message");
+        showMessageElem.textContent = error;
+        showMessageElem.classList.add("show-message-error");
+        showMessageElem.classList.remove("show-message-success");
+      }
+      function showSuccessMessage(message) {
+        var showMessageElem = document.getElementById("show-message");
+        showMessageElem.textContent = message;
+        showMessageElem.classList.add("show-message-success");
+        showMessageElem.classList.remove("show-message-error");
+      }
+      function directionToDegree(direction) {
+        switch (direction) {
+          case "左": return 270;
+          case "後": return 180;
+          case "右": return 90;
+          case "前": return 0;
+          default: return direction;
         }
-      }).filter(line => typeof line === "number");
-      if (inputErrors.length === 0) {
-        return { errors: [], data: angleList };
       }
-      return { errors: inputErrors };
-    }
-    function showErrorMessage(error) {
-      var showMessageElem = document.getElementById("show-message");
-      showMessageElem.textContent = error;
-      showMessageElem.classList.add("show-message-error");
-      showMessageElem.classList.remove("show-message-success");
-    }
-    function showSuccessMessage(message) {
-      var showMessageElem = document.getElementById("show-message");
-      showMessageElem.textContent = message;
-      showMessageElem.classList.add("show-message-success");
-      showMessageElem.classList.remove("show-message-error");
-    }
-    function directionToDegree(direction) {
-      switch (direction) {
-        case "左": return 270;
-        case "後": return 180;
-        case "右": return 90;
-        case "前": return 0;
-        default: return direction;
-      }
-    }
+    })();
   </script>
   <style type="text/css">
   html, body {
