@@ -114,8 +114,8 @@ function configureKeypress() {
   keypress(process.stdin);
 
   // listen for the "keypress" event
-  process.stdin.on('keypress', function (ch, key) {
-    if (key && key.ctrl && key.name === 'c') {
+  process.stdin.on("keypress", function (ch, key) {
+    if (key && key.ctrl && key.name === "c") {
       console.log("exit");
       process.stdin.pause();
       process.exit();

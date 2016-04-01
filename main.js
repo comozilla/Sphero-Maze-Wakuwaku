@@ -29,8 +29,8 @@ controller.addEventListener("collision", onCollide);
 app.use(express.static("client"));
 http.listen(3000, function () { });
 
-io.sockets.on('connection', function (socket) {
-  socket.on('runSphero', function (data) {
+io.sockets.on("connection", function (socket) {
+  socket.on("runSphero", function (data) {
     socket.emit("received", {});
     angles = data["angle-list"];
     currentAngleIndex = 0;
