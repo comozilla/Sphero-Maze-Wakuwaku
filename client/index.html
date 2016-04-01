@@ -31,14 +31,15 @@
     function processData(text) {
       var data = {};
       var inputErrors = [];
-      data["angle-list"] = text.split("\n");
-      data["angle-list"].forEach(line => {
+      var lines = text.split("\n");
+      lines.forEach(line => {
         if (!/^(左|右|前|後)$/.test(line)) {
           inputErrors.push(line + "は正しい入力ではありません。");
         }
       });
       if (inputErrors.length === 0) {
-        data["angle-list"].map(line => isNaN(line) ? line : parseInt(line));
+        lines.map(line => isNaN(line) ? line : parseInt(line));
+        data["angle-list"] = lines;
         showSuccessMessage("データは正しく処理されました。");
         return { error: false, data: data };
       }
