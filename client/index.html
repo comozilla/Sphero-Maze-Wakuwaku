@@ -14,10 +14,10 @@
         socket.emit("stopSphero", {});
       });
       document.getElementById("send-start-calibration").addEventListener("click", function() {
-        socket.emit("calibration", {start: true});
+        socket.emit("startCalibration", {});
       });
       document.getElementById("send-finish-calibration").addEventListener("click", function() {
-        socket.emit("calibration", {start: false});
+        socket.emit("finishCalibration", {});
       });
       socket.on("received", function() {
         console.log("送信されました！");

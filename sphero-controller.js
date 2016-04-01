@@ -81,12 +81,11 @@ var controller = {
       }
     });
   },
-  calibrate: function(isStart) {
-    if (isStart) {
-      orb.startCalibration();
-    } else {
-      orb.finishCalibration();
-    }
+  startCalibration: function() {
+    orb.startCalibration();
+  },
+  finishCalibration: function() {
+    orb.finishCalibration();
   }
 };
 

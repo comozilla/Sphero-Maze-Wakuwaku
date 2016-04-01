@@ -42,8 +42,11 @@ io.sockets.on('connection', function (socket) {
     isRunning = false;
     currentAngleIndex = 0;
   });
-  socket.on("calibration", function(data) {
-    controller.calibrate(data.start);
-  })
+  socket.on("startCalibration", function() {
+    controller.startCalibration();
+  });
+  socket.on("finishCalibration", function() {
+    controller.finishCalibration();
+  });
 });
 
