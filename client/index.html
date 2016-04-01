@@ -32,14 +32,20 @@
       var data = {};
       var inputErrors = [];
       var lines = text.split("\n");
-      lines.forEach(line => {
+      data["angle-list"] = lines.filter(line => {
         if (!/^(左|右|前|後)$/.test(line)) {
           inputErrors.push(line + "は正しい入力ではありません。");
+          return false;
+        }
+        return true;
+      }).map(line => isNaN(line) ? line : parseInt(line));
+        } else if (isNaN(line)) {
+          return line;
+        } else {
+          return parseInt(line);
         }
       });
       if (inputErrors.length === 0) {
-        lines.map(line => isNaN(line) ? line : parseInt(line));
-        data["angle-list"] = lines;
         showSuccessMessage("データは正しく処理されました。");
         return { error: false, data: data };
       }
