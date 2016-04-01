@@ -35,16 +35,15 @@
       var data = {};
       var inputErrors = [];
       var lines = text.split("\n");
-      var angleList = [];
-      lines.forEach(line => {
-        if (!/^(左|右|前|後)$/.test(line)) {
+      var angleList = lines.map(line => {
+        var deg = directionToDegree(line.substr(0, 1));
+        if (isNaN(deg)) {
           inputErrors.push(line + "は正しい入力ではありません。");
-        } else if (isNaN(line)) {
-          angleList.push(line);
+          return null;
         } else {
-          angleList.push(parseInt(line));
+          return parseInt(deg);
         }
-      });
+      }).filter(line => typeof line === "number");
       if (inputErrors.length === 0) {
         data["angle-list"] = angleList;
         return { errors: [], data: data };
@@ -60,6 +59,15 @@
       showMessageElem.textContent = message;
       showMessageElem.classList.add("show-message-success");
       showMessageElem.classList.remove("show-message-error");
+    }
+    function directionToDegree(direction) {
+      switch (direction) {
+        case "左": return 270;
+        case "後": return 180;
+        case "右": return 90;
+        case "前": return 0;
+        default: return direction;
+      }
     }
   </script>
   <style type="text/css">
