@@ -5,10 +5,14 @@
   <title>Sphero Textarea</title>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript">
+    var showMessageElem;
     document.addEventListener("DOMContentLoaded", function() {
       var socket = io.connect();
       document.getElementById("send-run").addEventListener("click", function() {
-        socket.emit("runSphero", processData(document.getElementById("sphero").value));
+        var dataResult = processData(document.getElementById("sphero").value);
+        if (!dataResult.error) {
+          socket.emit("runSphero", dataResult.data);
+        }
       });
       document.getElementById("send-stop").addEventListener("click", function() {
         socket.emit("stopSphero", {});
@@ -22,13 +26,34 @@
       socket.on("received", function() {
         console.log("送信されました！");
       });
+      showMessageElem = document.getElementById("show-message");
     });
     function processData(text) {
       var data = {};
-      data["angle-list"] = text.split("\n")
-      .filter(line => !isNaN(line) || /^(左|右|前|後)$/.test(line))
-      .map(line => isNaN(line) ? line : parseInt(line));
-      return data;
+      var inputErrors = [];
+      data["angle-list"] = text.split("\n");
+      data["angle-list"].forEach(line => {
+        if (/^(左|右|前|後)$/.test(line)) {
+          inputErrors.push(line + "は正しい入力ではありません。");
+        }
+      });
+      if (inputErrors.length === 0) {
+        data["angle-list"].map(line => isNaN(line) ? line : parseInt(line));
+        showSuccessMessage("データは正しく処理されました。");
+        return { error: false, data: data };
+      }
+      showErrorMessage(inputErrors.join("\n"));
+      return { error: true };
+    }
+    function showErrorMessage(error) {
+      showMessageElem.textContent = error;
+      showMessageElem.classList.add("show-message-error");
+      showMessageElem.classList.remove("show-message-success");
+    }
+    function showSuccessMessage(message) {
+      showMessageElem.textContent = message;
+      showMessageElem.classList.add("show-message-success");
+      showMessageElem.classList.remove("show-message-error");
     }
   </script>
   <style type="text/css">
@@ -39,10 +64,17 @@
     width: 100%;
     height: 50%;
   }
+  .show-message-error {
+    border: 3px solid red;
+  }
+  .show-message-success {
+    border: 3px solid green;
+  }
   </style>
 </head>
 <body>
   <textarea id="sphero"></textarea><br />
+  <p id="show-message"></p>
   <button id="send-run">run!</button>
   <button id="send-stop">stop!</button>
   <button id="send-start-calibration">start calibration</button>
