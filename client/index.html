@@ -5,7 +5,6 @@
   <title>Sphero Textarea</title>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript">
-    var showMessageElem;
     document.addEventListener("DOMContentLoaded", function() {
       var socket = io.connect();
       document.getElementById("send-run").addEventListener("click", function() {
@@ -49,11 +48,13 @@
       return { errors: inputErrors };
     }
     function showErrorMessage(error) {
+      var showMessageElem = document.getElementById("show-message");
       showMessageElem.textContent = error;
       showMessageElem.classList.add("show-message-error");
       showMessageElem.classList.remove("show-message-success");
     }
     function showSuccessMessage(message) {
+      var showMessageElem = document.getElementById("show-message");
       showMessageElem.textContent = message;
       showMessageElem.classList.add("show-message-success");
       showMessageElem.classList.remove("show-message-error");
