@@ -7,7 +7,7 @@ var controller = require("./sphero-controller");
 var angles = [];
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
-var currentAnglePoint = 0;
+var currentAngleIndex = 0;
 var isRunning = false;
 
 // 接続された時に呼び出されます。
@@ -19,7 +19,7 @@ function onConnect() {
 function onCollide(count) {
   console.log(isRunning);
   if (isRunning) {
-    controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);  
+    controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);  
   }
 }
 
@@ -33,14 +33,14 @@ io.sockets.on('connection', function (socket) {
   socket.on('runSphero', function (data) {
     socket.emit("received", {});
     angles = data["angle-list"];
-    currentAnglePoint = 0;
-    controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
+    currentAngleIndex = 0;
+    controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
     isRunning = true;
   });
   socket.on("stopSphero", function() {
     controller.move(0, 0);
     isRunning = false;
-    currentAnglePoint = 0;
+    currentAngleIndex = 0;
   });
   socket.on("calibration", function(data) {
     controller.calibrate(data.start);
