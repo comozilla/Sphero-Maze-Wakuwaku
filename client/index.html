@@ -32,20 +32,15 @@
       var data = {};
       var inputErrors = [];
       var lines = text.split("\n");
-      data["angle-list"] = lines.filter(line => {
+      // 最初にforEachで、エラーの数（inputErrors.length）をとり、
+      // エラーが 0個 の場合、map で処理するようにした。
+      lines.forEach(line => {
         if (!/^(左|右|前|後)$/.test(line)) {
           inputErrors.push(line + "は正しい入力ではありません。");
-          return false;
-        }
-        return true;
-      }).map(line => isNaN(line) ? line : parseInt(line));
-        } else if (isNaN(line)) {
-          return line;
-        } else {
-          return parseInt(line);
         }
       });
       if (inputErrors.length === 0) {
+        data["angle-list"] = lines.map(line => isNaN(line) ? line : parseInt(line));
         showSuccessMessage("データは正しく処理されました。");
         return { error: false, data: data };
       }
