@@ -34,7 +34,7 @@ io.sockets.on("connection", function (socket) {
     socket.emit("received", {});
     currentAngleIndex = 0;
     if (angles.length > 0) {
-      controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
+      controller.move(100, angles[currentAngleIndex++]);
     }
     isRunning = true;
   });
