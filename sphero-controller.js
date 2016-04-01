@@ -46,26 +46,7 @@ var controller = {
     return orb;
   },
   move: function (speed, deg) {
-    var _deg = 0;
-    if (!isNaN(deg)) {
-      _deg = deg;
-    } else {
-      switch (deg) {
-        case "左":
-          _deg = 270;
-          break;
-        case "後":
-          _deg = 180;
-          break;
-        case "右":
-          _deg = 90;
-          break;
-        case "前":
-          _deg = 0;
-          break;
-      }
-    }
-    roll(orb, speed, _deg);
+    roll(orb, speed, deg);
   },
   setColor: function (color, time) {
     orb.getColor(function (err, data) {

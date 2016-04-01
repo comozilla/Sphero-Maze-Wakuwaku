@@ -19,7 +19,7 @@ function onConnect() {
 function onCollide(count) {
   console.log(isRunning);
   if (isRunning) {
-    controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);  
+    controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
   }
 }
 
@@ -31,12 +31,21 @@ http.listen(3000, function () { });
 
 io.sockets.on("connection", function (socket) {
   socket.on("runSphero", function (angles) {
+    var isError = false;
+    angles.forEach(angle => {
+      if (typeof angle !== "number") {
+        console.log("Error: 正しくない値が送られました");
+        isError = true;
+      }
+    });
     socket.emit("received", {});
-    currentAngleIndex = 0;
-    if (angles.length > 0) {
-      controller.move(100, angles[currentAngleIndex++]);
+    if (!isError) {
+      currentAngleIndex = 0;
+      if (angles.length > 0) {
+        controller.move(100, angles[currentAngleIndex++]);
+      }
+      isRunning = true;
     }
-    isRunning = true;
   });
   socket.on("stopSphero", function() {
     controller.move(0, 0);
