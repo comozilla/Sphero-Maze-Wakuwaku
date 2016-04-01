@@ -25,7 +25,7 @@
     });
     function processData(text) {
       var data = {};
-      data["angle-list"] = text.split("\n");
+      data["angle-list"] = text.split("\n").map(line => isNaN(line) ? line : parseInt(line));
       return data;
     }
   </script>
