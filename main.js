@@ -32,7 +32,7 @@ http.listen(3000, function () { });
 io.sockets.on('connection', function (socket) {
   socket.on('runSphero', function (data) {
     socket.emit("received", {});
-    angles = data.deg;
+    angles = data["angle-list"];
     currentAnglePoint = 0;
     controller.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
     isRunning = true;
