@@ -32,7 +32,6 @@
       showMessageElem = document.getElementById("show-message");
     });
     function parseData(text) {
-      var data = {};
       var inputErrors = [];
       var lines = text.split("\n");
       var angleList = lines.map(line => {
@@ -45,8 +44,7 @@
         }
       }).filter(line => typeof line === "number");
       if (inputErrors.length === 0) {
-        data["angle-list"] = angleList;
-        return { errors: [], data: data };
+        return { errors: [], data: angleList };
       }
       return { errors: inputErrors };
     }

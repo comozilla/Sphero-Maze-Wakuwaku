@@ -30,9 +30,8 @@ app.use(express.static("client"));
 http.listen(3000, function () { });
 
 io.sockets.on("connection", function (socket) {
-  socket.on("runSphero", function (data) {
+  socket.on("runSphero", function (angles) {
     socket.emit("received", {});
-    angles = data["angle-list"];
     currentAngleIndex = 0;
     controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
     isRunning = true;
