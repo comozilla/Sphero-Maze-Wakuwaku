@@ -9,7 +9,7 @@
     document.addEventListener("DOMContentLoaded", function() {
       var socket = io.connect();
       document.getElementById("send-run").addEventListener("click", function() {
-        var dataResult = processData(document.getElementById("sphero").value);
+        var dataResult = parseData(document.getElementById("sphero").value);
         if (dataResult.errors.length === 0) {
           showSuccessMessage("データは正しく処理されました。");
           socket.emit("runSphero", dataResult.data);
@@ -31,7 +31,7 @@
       });
       showMessageElem = document.getElementById("show-message");
     });
-    function processData(text) {
+    function parseData(text) {
       var data = {};
       var inputErrors = [];
       var lines = text.split("\n");
