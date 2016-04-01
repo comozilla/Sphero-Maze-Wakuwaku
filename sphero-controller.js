@@ -28,10 +28,10 @@ var controller = {
         dead: 100
       }, function () {
         console.log("configured");
-        orb.startCalibration(); // 位置関係の補正
+        controller.calibrate(true); // 位置関係の補正
         setKeypressCallback("space", function () {
           console.log("準備終了");
-          orb.finishCalibration();
+          controller.calibrate(false);
           orb.detectCollisions(); // 衝突判定を有効化
           orb.on("collision", function () {
             controller.setColor("green", 0.5);
@@ -46,26 +46,7 @@ var controller = {
     return orb;
   },
   move: function (speed, deg) {
-    var _deg = 0;
-    if (typeof deg === "number") {
-      _deg = deg;
-    } else if (typeof deg === "string") {
-      switch (deg) {
-        case "左":
-          _deg = 270;
-          break;
-        case "後":
-          _deg = 180;
-          break;
-        case "右":
-          _deg = 90;
-          break;
-        case "前":
-          _deg = 0;
-          break;
-      }
-    }
-    roll(orb, speed, _deg);
+    roll(orb, speed, deg);
   },
   setColor: function (color, time) {
     orb.getColor(function (err, data) {
@@ -80,6 +61,12 @@ var controller = {
         }
       }
     });
+  },
+  startCalibration: function() {
+    orb.startCalibration();
+  },
+  finishCalibration: function() {
+    orb.finishCalibration();
   }
 };
 
@@ -108,8 +95,8 @@ function configureKeypress() {
   keypress(process.stdin);
 
   // listen for the "keypress" event
-  process.stdin.on('keypress', function (ch, key) {
-    if (key && key.ctrl && key.name === 'c') {
+  process.stdin.on("keypress", function (ch, key) {
+    if (key && key.ctrl && key.name === "c") {
       console.log("exit");
       process.stdin.pause();
       process.exit();
