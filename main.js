@@ -33,7 +33,9 @@ io.sockets.on("connection", function (socket) {
   socket.on("runSphero", function (angles) {
     socket.emit("received", {});
     currentAngleIndex = 0;
-    controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
+    if (angles.length > 0) {
+      controller.move(100, angles[Math.min(currentAngleIndex++, angles.length - 1)]);
+    }
     isRunning = true;
   });
   socket.on("stopSphero", function() {
