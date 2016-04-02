@@ -36,15 +36,13 @@ function setColor(color, time) {
     if (err) {
       console.log("getColorでエラーが発生: " + err);
     } else {
-      if (data) {
-        // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
-        var originalColor = parseInt(data.color);
-        orb.color(color);
-        if (typeof time !== "undefined") {
-          setTimeout(function () {
-            orb.color(originalColor);
-          }, time * 1000);
-        }
+      // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
+      var originalColor = parseInt(data.color);
+      orb.color(color);
+      if (typeof time !== "undefined") {
+        setTimeout(function () {
+          orb.color(originalColor);
+        }, time * 1000);
       }
     }
   });
