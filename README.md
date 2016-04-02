@@ -1,11 +1,6 @@
 # Sphero-Maze-Wakuwaku
-Sphero で迷路を脱出するためのプログラム。
-Gifter-labo 向けのひな形。
-
-## About
-できるだけ簡単に、node.js で
-迷路を解けるようにしました。
-___
+Sphero で迷路を脱出するためのプログラム。  
+Webpage から操作ができます。  
 
 ## 準備
 
@@ -19,10 +14,10 @@ npm install
 
 ```js
 // 自分の Sphero の ID に置き換える
-var port = "xxx";
+var orb = require("sphero")("xxx");
 ```
-Spheroのシリアルポートにしておく。
-シリアルポートの取得は[こちら](https://github.com/comozilla/Sphero-wakuwaku/wiki/%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A)を参照。
+Spheroのシリアルポートにしておく。  
+シリアルポートの取得は[こちら](https://github.com/comozilla/Sphero-wakuwaku/wiki/%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A)を参照。  
 
 - 実行
 
@@ -30,42 +25,31 @@ Spheroのシリアルポートにしておく。
 npm start
 ```
 
-その後、位置補正が始まる。
-Space キーで位置補正終了、onConnect 関数呼び出し。
+- [localhost:3000](http://localhost:3000/)を開く
 
-## main.js 内関数について
+## Webpage の使い方
+textarea に、角度を、改行を区切りにして書いていきます。
+角度の他に、「前後左右」でも操作できるよう、ラップしてあります。  
+(例)
+```
+180
+0
+右
+前
+```
 
-### onConnect
+### 動かす
+`run!` ボタンを押します。  
 
-Spheroに接続された時に呼び出されます。
+### 止める
+`stop!` ボタンを押します。  
 
-### onCollide
-
-衝突時に呼び出されます。
-
-## sphero-controller でラップしている部分
-
-※ `[]` 内は省略可能
-
-### move(speed, deg)
-Spheroを動かします。
-speedは、動かす速度で、0-255 で指定します。
-degは、数値を指定すると角度、
-文字列を指定すると、「左 右 前 後」に動きます。
-
-### setColor(color[, time])
-Sphero の色を変更します。
-色の指定方法は、orb.color と同様、
-`orange`、`green`などの名前や、
-カラーコードの場合は、`0x00ff88` と、16進数で指定できます。
-また、第二引数に、指定した色を適用する時間を秒単位で設定します。
-
-<!---
-### connect(port, callback)
-Sphero に接続します。
-callback では、接続、位置補正の処理が
-終わった後に呼び出される関数を指定します。
--->
+### 前後左右を変えたいとき
+`start calibration` ボタンを押すと、  
+`orb.startCalibration();` が実行されます。  
+後となる方向に、青色のLEDが光りますので、
+手動で向きを変えてください。
+`finish calibration` で、このモードを終了します。
 
 ## License
 [MIT License](http://wisdommingle.com/mit-license/)
